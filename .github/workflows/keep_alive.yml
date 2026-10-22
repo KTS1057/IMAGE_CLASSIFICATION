@@ -1,0 +1,25 @@
+name: Keep App Alive
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'  # Runs automatically every 4 hours
+  workflow_dispatch:       # Allows manual trigger from GitHub UI
+
+jobs:
+  wake-up:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install selenium webdriver-manager
+
+      - name: Run Wake-Up Script
+        run: python wake_app.py
